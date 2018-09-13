@@ -1,27 +1,15 @@
-import React, { Component } from 'react';
-import { Route } from 'react-router-dom';
-import SignupPage from './signup/SignupPage';
-import LoginPage from './LoginPage';
-import Header from './Header';
-import Landing from './Landing';
-import { BrowserRouter } from 'react-router-dom'
+import React from "react"
 
-import { connect } from 'react-redux';
-import * as actions from '../actions';
+import Button from '@material-ui/core/Button';
 
-class App extends Component {
+class App extends React.Component {
   render() {
     return (
-      <BrowserRouter>
-        <div className="App">
-          <Header />
-          <Route exact path="/login" component={LoginPage} />
-          <Route exact path="/signup" component={SignupPage} />
-          <Route exact path="/" component={Landing} />
-        </div>
-      </BrowserRouter>
-    );
+      <Button variant='contained' color='primary'>
+        Hello World
+      </Button>
+    )
   }
 }
 
-export default connect(null, actions)(App);
+export default App

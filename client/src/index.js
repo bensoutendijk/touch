@@ -1,23 +1,20 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import { Provider } from 'react-redux';
-import { createStore, applyMiddleware } from 'redux';
-import logger from 'redux-logger'
-import reduxThunk from 'redux-thunk';
-import registerServiceWorker from './registerServiceWorker';
+import React from 'react'
+import ReactDOM from 'react-dom'
+import { createStore } from 'redux'
 
+import reducer from './reducers/index'
+import todoAction from './actions/index'
 
-import App from './components/App';
-import reducers from './reducers';
+import App from './components/App'
 
-import axios from 'axios';
-window.axios = axios;
+const store = createStore(reducer);
 
-const store = createStore(reducers, {}, applyMiddleware(reduxThunk, logger));
+store.dispatch(todoAction);
 
 ReactDOM.render(
-<Provider store={store}>
-  <App />
-</Provider>, document.getElementById('root'));
 
-registerServiceWorker();
+  <App />,
+
+  document.getElementById('root')
+
+)

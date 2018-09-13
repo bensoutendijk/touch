@@ -1,8 +1,5 @@
-import { combineReducers } from 'redux';
-import { reducer as reduxForm } from 'redux-form';
-import userReducer from './userReducer';
+function reducer(state = {}, action) {
+  console.log(action, state);
+}
 
-export default combineReducers({
-  user: userReducer,
-  form: reduxForm
-});
+export default reducer
