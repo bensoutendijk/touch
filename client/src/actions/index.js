@@ -1,6 +1,3 @@
-const todoAction = {
-  type: 'ADD_TODO',
-  todo: 'buy milk'
+export const deletePost = (id) => {
+  
 }
-
-export default todoAction
