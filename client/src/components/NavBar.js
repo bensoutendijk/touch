@@ -4,6 +4,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button'
 import { styles } from '../styles'
+import { Link } from 'react-router-dom'
 
 class NavBar extends React.Component {
   render() {
@@ -11,11 +12,11 @@ class NavBar extends React.Component {
     return (
       <div className={classes.root}>
         <Toolbar>
-          <Typography variant="headline" color="inherit" className={classes.grow}>
+          <Typography component={Link} to='/' variant="headline" color="inherit" className={classes.grow}>
             Touch
           </Typography>
           <Typography>
-            <Button to='/posts'>Posts</Button>
+            <Button component={Link} to='/posts' >Posts</Button>
           </Typography>
         </Toolbar>
       </div>

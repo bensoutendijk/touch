@@ -7,6 +7,7 @@ import { styles } from '../styles'
 import NavBar from './NavBar'
 import PostsPage from './Posts/PostsPage'
 import ShowPost from './Posts/ShowPost'
+import HomePage from './HomePage'
 
 class App extends React.Component {
   render() {
@@ -15,13 +16,16 @@ class App extends React.Component {
       <React.Fragment>
         <CssBaseline />
         <div className={classes.layout}>
-          <NavBar />
-            <Router>
+          <Router>
+            <div>
+              <NavBar />
               <main>
+                <Route exact path='/' component={HomePage} />
                 <Route exact path='/posts' component={PostsPage} />
                 <Route path='/posts/:post_id' component={ShowPost} />
               </main>
-            </Router>
+            </div>
+          </Router>
         </div>
       </React.Fragment>
     )

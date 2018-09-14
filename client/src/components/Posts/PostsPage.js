@@ -13,7 +13,6 @@ class PostsPage extends React.Component {
   render() {
     const { classes } = this.props
     const postsList = this.props.posts.map((post) => {
-      const MyLink = props => <Link to={`/posts/${post.id}`} {...props} />
       return (
         <div key={post.id} className={classes.mainFeaturedPostContent}>
           <Typography variant="display2" color="inherit" gutterBottom>
@@ -22,7 +21,7 @@ class PostsPage extends React.Component {
           <Typography variant="headline" color="inherit" paragraph>
             {post.body}
           </Typography>
-          <Button component={MyLink} color='inherit'>
+          <Button component={Link} to={`/posts/${post.id}`} color='inherit'>
             Continue reading...
           </Button>
         </div>
