@@ -1,26 +1,26 @@
 import React from 'react'
+import { withStyles } from '@material-ui/core/styles'
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-import { Link } from 'react-router-dom'
+import Button from '@material-ui/core/Button'
+import { styles } from '../styles'
+
 class NavBar extends React.Component {
   render() {
-    
-    console.log()
-    
+    const { classes } = this.props
     return (
-      <Toolbar>
-        <Typography variant="headline" color="inherit">
-          Touch
-        </Typography>
-        <Typography variant="title" color="inherit">
-          {this.props.location.pathname}
-        </Typography>
-        <Typography>
-          <Link to='/posts'>Posts</Link>
-        </Typography>
-      </Toolbar>
+      <div className={classes.root}>
+        <Toolbar>
+          <Typography variant="headline" color="inherit" className={classes.grow}>
+            Touch
+          </Typography>
+          <Typography>
+            <Button to='/posts'>Posts</Button>
+          </Typography>
+        </Toolbar>
+      </div>
     )
   }
 }
 
-export default NavBar
+export default withStyles(styles)(NavBar)

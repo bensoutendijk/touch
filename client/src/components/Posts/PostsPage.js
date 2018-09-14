@@ -1,32 +1,36 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import { withStyles } from '@material-ui/core/styles'
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
+import Button from '@material-ui/core/Button'
 import { Link } from 'react-router-dom'
+import { styles } from '../../styles'
 
 
 class PostsPage extends React.Component {
   render() {
-
+    const { classes } = this.props
     const postsList = this.props.posts.map((post) => {
+      const MyLink = props => <Link to={`/posts/${post.id}`} {...props} />
       return (
-        <div key={post.id}>
+        <div key={post.id} className={classes.mainFeaturedPostContent}>
           <Typography variant="display2" color="inherit" gutterBottom>
             {post.title}
           </Typography>
           <Typography variant="headline" color="inherit" paragraph>
             {post.body}
           </Typography>
-          <Typography variant="title" color="inherit">
-            <Link to={`/posts/${post.id}`} >Continue reading...</Link>
-          </Typography>
+          <Button component={MyLink} color='inherit'>
+            Continue reading...
+          </Button>
         </div>
       )
     })
 
     return ( 
-      <Paper>
+      <Paper className={classes.mainFeaturedPost}>
         <Grid container>
           <Grid item md={8}>
             {postsList}
@@ -43,4 +47,4 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default connect(mapStateToProps)(PostsPage)
+export default withStyles(styles)(connect(mapStateToProps)(PostsPage))
