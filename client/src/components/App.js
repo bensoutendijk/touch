@@ -7,16 +7,14 @@ import NavBar from './NavBar'
 import PostList from './Posts/PostList'
 import PostShow from './Posts/PostShow'
 import HomePage from './HomePage'
-import { styles } from '../styles'
 import * as actions from '../actions'
 
 class App extends React.Component {
   render() {
-    const { classes } = this.props
     return (
       <React.Fragment>
         <CssBaseline />
-        <div className={classes.layout}>
+        <div>
           <Router>
             <div>
               <NavBar />
@@ -33,4 +31,4 @@ class App extends React.Component {
   }
 }
 
-export default withStyles(styles)(connect(null, actions)(App))
+export default connect(null, actions)(App)

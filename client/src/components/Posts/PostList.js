@@ -5,8 +5,6 @@ import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button'
-import { withStyles } from '@material-ui/core/styles'
-import { styles } from '../../styles'
 import { Link } from 'react-router-dom'
 import { fetchPosts } from '../../actions'
 
@@ -16,10 +14,9 @@ class PostsPage extends React.Component {
   }
 
   renderPosts() {
-    const { classes } = this.props
     return map(this.props.posts, (post) => {
       return (
-        <div key={post.id} className={classes.mainFeaturedPostContent}>
+        <div key={post.id}>
           <Typography variant="display2" color="inherit" gutterBottom>
             {post.title}
           </Typography>
@@ -36,7 +33,7 @@ class PostsPage extends React.Component {
   render() {
     const { classes } = this.props
     return ( 
-      <Paper className={classes.mainFeaturedPost}>
+      <Paper>
         <Grid container>
           <Grid item md={8}>
             {this.renderPosts()}
@@ -51,4 +48,4 @@ function mapStateToProps({ posts }) {
   return { posts };
 }
 
-export default withStyles(styles)(connect(mapStateToProps,{ fetchPosts })(PostsPage))
+export default connect(mapStateToProps,{ fetchPosts })(PostsPage)
