@@ -1,4 +1,4 @@
-export const styles = theme => ({
+const styles = theme => ({
   layout: {
     width: 'auto',
     marginLeft: theme.spacing.unit * 3,
@@ -55,11 +55,5 @@ export const styles = theme => ({
     backgroundColor: theme.palette.background.paper,
     marginTop: theme.spacing.unit * 8,
     padding: `${theme.spacing.unit * 6}px 0`,
-  },
-  root: {
-    flexGrow: 1,
-  },
-  grow: {
-    flexGrow: 1,
   },
 });

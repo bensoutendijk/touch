@@ -12,18 +12,16 @@ class App extends React.Component {
   render() {
     return (
       <React.Fragment>
-        <div>
           <Router>
-            <Grid style={{ marginLeft: 'auto', marginRight: 'auto', maxWidth: 1100 }}>
+            <div>
               <NavBar />
               <main>
                 <Route exact path='/' component={HomePage} />
                 <Route exact path='/posts' component={PostList} />
                 <Route exact path='/posts/:post_id' component={PostShow} />
               </main>
-            </Grid>
+            </div>
           </Router>
-        </div>
       </React.Fragment>
     )
   }

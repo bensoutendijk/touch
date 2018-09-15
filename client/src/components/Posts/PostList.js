@@ -1,34 +1,37 @@
-import map from 'lodash/map';
 import React from 'react'
 import { connect } from 'react-redux'
-import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
+import Grid from '@material-ui/core/Grid'
+import Typography from '@material-ui/core/Typography'
+import Paper from '@material-ui/core/Paper'
 import { Link } from 'react-router-dom'
+import { fetchFeaturedPosts } from '../../actions'
 import { fetchPosts } from '../../actions'
 
 class PostsPage extends React.Component {
   componentDidMount () {
-    this.props.fetchPosts()
+    this.props.fetchFeaturedPosts()
   }
 
-  renderPosts() {
-    return map(this.props.posts, (post) => {
+  renderFeatured() {
+    if (this.props.posts[0]) {
       return (
-        <Grid item md={6} xs={12} key={post.id}>
-          <Typography component={Link} to={`/posts/${post.id}`} color='primary'>
-            {post.title}
-          </Typography>
-          <Typography>
-            {post.body}
-          </Typography>
-        </Grid>
+        <div>
+          <Paper>
+            <Grid item md={12}>
+              <Typography variant='display2'>
+                {this.props.posts[0].title}
+              </Typography>
+            </Grid>
+          </Paper>
+        </div>
       )
-    })
+    }
   }
+
   render() {
     return ( 
-      <Grid container spacing={40}>
-        {this.renderPosts()}
+      <Grid container>
+        {this.renderFeatured()}
       </Grid>
     )
   }
@@ -38,4 +41,4 @@ function mapStateToProps({ posts }) {
   return { posts };
 }
 
-export default connect(mapStateToProps,{ fetchPosts })(PostsPage)
+export default connect(mapStateToProps,{ fetchFeaturedPosts, fetchPosts })(PostsPage)
