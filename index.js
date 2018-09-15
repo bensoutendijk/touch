@@ -4,9 +4,11 @@ const mongoose = require('mongoose')
 const keys = require('./config/keys')
 const passport = require('passport')
 const bodyParser = require('body-parser')
+const axios = require('axios')
 
 require('./models/User')
 require('./models/Post')
+
 require('./services/passport')
 
 mongoose.Promise = global.Promise

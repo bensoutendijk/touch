@@ -57,3 +57,5 @@ const styles = theme => ({
     padding: `${theme.spacing.unit * 6}px 0`,
   },
 });
+
+export default styles

@@ -3,10 +3,11 @@ const { Schema } = mongoose
 
 
 const postSchema = new Schema({
-  userId: {type: Number, required: true},
+  user_id: {type: Number, required: true},
   id: {type: Number, unique: true, required: true},
   title: {type: String, required: true},
-  body: {type: String, required: true}
+  body: {type: String, required: true},
+  repo_name: {type: String}
 });
 
 mongoose.model('Post', postSchema);

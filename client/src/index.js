@@ -7,9 +7,6 @@ import { Provider } from 'react-redux'
 import App from './components/App'
 import logger from 'redux-logger'
 
-import axios from 'axios';
-window.axios = axios;
-
 const store = createStore(reducers, {}, applyMiddleware(reduxThunk, logger));
 
 ReactDOM.render(

@@ -10,12 +10,9 @@ module.exports = app => {
     return res.send(data)
   })
 
-  app.get('/api/posts/:type', async (req, res) => {
+  app.get('/api/posts/featured', async (req, res) => {
     const { data } = await axios.get('https://jsonplaceholder.typicode.com/posts')
-    switch (req.params.type) {
-      case 'featured': return res.send(data.slice(5,8))
-      default: return res.send(data)
-    }
+    return res.send(data.slice(5,8))
   })
 
   app.get('/api/posts/:id', async (req, res) => {

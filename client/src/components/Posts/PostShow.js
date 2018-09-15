@@ -4,7 +4,7 @@ import { fetchPost } from '../../actions'
 
 class PostShow extends React.Component {
   componentDidMount() {
-    this.props.fetchPost(this.props.match.params.post_id)
+    this.props.fetchPost(this.props.match.params.id)
   }
 
   render() {
@@ -24,7 +24,7 @@ class PostShow extends React.Component {
 }
 
 function mapStateToProps({ posts }, ownProps) {
-  return { post: posts[ownProps.match.params.post_id] };
+  return { post: posts[ownProps.match.params.id] };
 }
 
 export default connect(mapStateToProps, { fetchPost })(PostShow)
