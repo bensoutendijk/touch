@@ -1,13 +1,13 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { BrowserRouter as Router, Route } from 'react-router-dom';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { withStyles } from '@material-ui/core/styles'
-import { styles } from '../styles'
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 import NavBar from './NavBar'
 import PostsPage from './Posts/PostsPage'
-import ShowPost from './Posts/ShowPost'
 import HomePage from './HomePage'
+import { styles } from '../styles'
+import * as actions from '../actions'
 
 class App extends React.Component {
   render() {
@@ -22,7 +22,6 @@ class App extends React.Component {
               <main>
                 <Route exact path='/' component={HomePage} />
                 <Route exact path='/posts' component={PostsPage} />
-                <Route path='/posts/:post_id' component={ShowPost} />
               </main>
             </div>
           </Router>
@@ -32,10 +31,4 @@ class App extends React.Component {
   }
 }
 
-const mapStateToProps = (state) => {
-  return {
-    current_user: state.current_user
-  }
-}
-
-export default withStyles(styles)(connect(mapStateToProps)(App))
+export default withStyles(styles)(connect(null, actions)(App))

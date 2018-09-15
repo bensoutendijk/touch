@@ -1,18 +1,23 @@
+import map from 'lodash/map';
 import React from 'react'
 import { connect } from 'react-redux'
-import { withStyles } from '@material-ui/core/styles'
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button'
-import { Link } from 'react-router-dom'
+import { withStyles } from '@material-ui/core/styles'
 import { styles } from '../../styles'
-
+import { Link } from 'react-router-dom'
+import { fetchPosts } from '../../actions'
 
 class PostsPage extends React.Component {
-  render() {
+  componentDidMount () {
+    this.props.fetchPosts()
+  }
+
+  renderPosts() {
     const { classes } = this.props
-    const postsList = this.props.posts.map((post) => {
+    return map(this.props.posts, (post) => {
       return (
         <div key={post.id} className={classes.mainFeaturedPostContent}>
           <Typography variant="display2" color="inherit" gutterBottom>
@@ -27,12 +32,14 @@ class PostsPage extends React.Component {
         </div>
       )
     })
-
+  }
+  render() {
+    const { classes } = this.props
     return ( 
       <Paper className={classes.mainFeaturedPost}>
         <Grid container>
           <Grid item md={8}>
-            {postsList}
+            {this.renderPosts()}
           </Grid>
         </Grid>
       </Paper>
@@ -40,10 +47,8 @@ class PostsPage extends React.Component {
   }
 }
 
-const mapStateToProps = (state) => {
-  return {
-    posts: state.posts
-  }
+function mapStateToProps({ posts }) {
+  return { posts };
 }
 
-export default withStyles(styles)(connect(mapStateToProps)(PostsPage))
+export default withStyles(styles)(connect(mapStateToProps,{ fetchPosts })(PostsPage))

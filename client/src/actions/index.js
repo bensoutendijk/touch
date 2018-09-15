@@ -1,6 +1,6 @@
-export const deletePost = (id) => {
-  return {
-    type: 'DELETE_POST',
-    payload: id
-  }
+import axios from 'axios'
+
+export const fetchPosts = () => async dispatch => {
+  const res = await axios.get('/api/posts')
+  dispatch({ type: 'FETCH_POSTS', payload: res.data })
 }

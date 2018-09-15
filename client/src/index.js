@@ -1,13 +1,16 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { createStore } from 'redux'
-
-import reducer from './reducers/index'
+import { createStore, applyMiddleware } from 'redux';
+import reduxThunk from 'redux-thunk';
+import reducers from './reducers';
 import { Provider } from 'react-redux'
 import App from './components/App'
+import logger from 'redux-logger'
 
-const store = createStore(reducer);
+import axios from 'axios';
+window.axios = axios;
 
+const store = createStore(reducers, {}, applyMiddleware(reduxThunk, logger));
 
 ReactDOM.render(
   <Provider store={store}>

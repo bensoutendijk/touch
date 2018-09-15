@@ -17,8 +17,8 @@ app.use(bodyParser.urlencoded({ extended: true }))
 app.use(passport.initialize())
 app.use(passport.session())
 
+require('./routes/postRoutes')(app)
 require('./routes/authRoutes')(app)
-
 const PORT = 5000
 
 app.listen(PORT, () => {
