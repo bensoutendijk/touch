@@ -31,7 +31,6 @@ class PostsPage extends React.Component {
     })
   }
   render() {
-    const { classes } = this.props
     return ( 
       <Paper>
         <Grid container>

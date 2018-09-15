@@ -1,7 +1,5 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import CssBaseline from '@material-ui/core/CssBaseline';
-import { withStyles } from '@material-ui/core/styles'
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import NavBar from './NavBar'
 import PostList from './Posts/PostList'
@@ -13,7 +11,6 @@ class App extends React.Component {
   render() {
     return (
       <React.Fragment>
-        <CssBaseline />
         <div>
           <Router>
             <div>
