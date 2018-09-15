@@ -2,9 +2,7 @@ import map from 'lodash/map';
 import React from 'react'
 import { connect } from 'react-redux'
 import Grid from '@material-ui/core/Grid';
-import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button'
 import { Link } from 'react-router-dom'
 import { fetchPosts } from '../../actions'
 
@@ -16,29 +14,22 @@ class PostsPage extends React.Component {
   renderPosts() {
     return map(this.props.posts, (post) => {
       return (
-        <div key={post.id}>
-          <Typography variant="display2" color="inherit" gutterBottom>
+        <Grid item md={6} xs={12} key={post.id}>
+          <Typography component={Link} to={`/posts/${post.id}`} color='primary'>
             {post.title}
           </Typography>
-          <Typography variant="headline" color="inherit" paragraph>
+          <Typography>
             {post.body}
           </Typography>
-          <Button component={Link} to={`/posts/${post.id}`} color='inherit'>
-            Continue reading...
-          </Button>
-        </div>
+        </Grid>
       )
     })
   }
   render() {
     return ( 
-      <Paper>
-        <Grid container>
-          <Grid item md={8}>
-            {this.renderPosts()}
-          </Grid>
-        </Grid>
-      </Paper>
+      <Grid container spacing={40}>
+        {this.renderPosts()}
+      </Grid>
     )
   }
 }

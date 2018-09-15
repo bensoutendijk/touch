@@ -6,6 +6,7 @@ import PostList from './Posts/PostList'
 import PostShow from './Posts/PostShow'
 import HomePage from './HomePage'
 import * as actions from '../actions'
+import Grid from '@material-ui/core/Grid'
 
 class App extends React.Component {
   render() {
@@ -13,14 +14,14 @@ class App extends React.Component {
       <React.Fragment>
         <div>
           <Router>
-            <div>
+            <Grid style={{ marginLeft: 'auto', marginRight: 'auto', maxWidth: 1100 }}>
               <NavBar />
               <main>
                 <Route exact path='/' component={HomePage} />
                 <Route exact path='/posts' component={PostList} />
                 <Route exact path='/posts/:post_id' component={PostShow} />
               </main>
-            </div>
+            </Grid>
           </Router>
         </div>
       </React.Fragment>
