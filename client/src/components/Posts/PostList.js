@@ -15,7 +15,7 @@ import { fetchPosts } from '../../actions'
 import Divider from '@material-ui/core/Divider';
 import Markdown from './Markdown';
 
-class PostsPage extends React.Component {
+class PostList extends React.Component {
   componentDidMount () {
     this.props.fetchPosts()
   }
@@ -135,4 +135,4 @@ function mapStateToProps({ posts }) {
   return { posts };
 }
 
-export default withStyles(styles)(connect(mapStateToProps,{ fetchPosts })(PostsPage))
+export default withStyles(styles)(connect(mapStateToProps,{ fetchPosts })(PostList))
