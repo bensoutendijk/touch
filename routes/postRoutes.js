@@ -6,18 +6,18 @@ const Post = mongoose.model('Post')
 module.exports = app => {
 
   app.get('/api/posts', async (req, res) => {
-    const { data } = await axios.get('https://jsonplaceholder.typicode.com/posts')
-    return res.send(data)
+    const posts = await Post.find({});
+    return res.send(posts)
   })
 
   app.get('/api/posts/featured', async (req, res) => {
-    const { data } = await axios.get('https://jsonplaceholder.typicode.com/posts')
-    return res.send(data.slice(5,8))
+    const posts = await Post.find({});
+    return res.send(posts.slice(0,3))
   })
 
   app.get('/api/posts/:id', async (req, res) => {
-    const { data } = await axios.get(`https://jsonplaceholder.typicode.com/posts/${req.params.id}`)
-    return res.send(data)
+    const post = await Post.findOne({_id: req.params.id});
+    return res.send(post)
   })
 
   app.post('/api/posts', async (req, res) => {
@@ -34,7 +34,7 @@ module.exports = app => {
       await post.save()
       res.send(post)
     } catch (err) {
-      res.send(400, err)
+      res.status(400).send(err)
     }
     
   })

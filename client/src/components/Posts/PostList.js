@@ -40,7 +40,7 @@ class PostsPage extends React.Component {
                 <Typography variant="headline" color="inherit" paragraph>
                   {mainFeaturedPost.body}
                 </Typography>
-                <Typography variant="title" color="inherit" component={Link} to={`/posts/${mainFeaturedPost.id}`}>
+                <Typography variant="title" color="inherit" component={Link} to={`/posts/${mainFeaturedPost._id}`}>
                   Continue reading...
                 </Typography>
               </div>
@@ -51,7 +51,7 @@ class PostsPage extends React.Component {
         {/* Start sub featured posts */}
         <Grid container spacing={40} className={classes.cardGrid}>
             {subFeaturedPosts.map(post => (
-              <Grid item key={post.title} xs={12} md={6}>
+              <Grid item key={post._id} xs={12} md={6}>
                 <Card className={classes.card}>
                   <div className={classes.cardDetails}>
                     <CardContent>
@@ -62,7 +62,7 @@ class PostsPage extends React.Component {
                       <Typography variant="subheading" paragraph>
                         {post.description}
                       </Typography>
-                      <Typography variant="subheading" color="primary" component={Link} to={`/posts/${post.id}`}>
+                      <Typography variant="subheading" color="primary" component={Link} to={`/posts/${post._id}`}>
                         Continue reading...
                       </Typography>
                     </CardContent>
