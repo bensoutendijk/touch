@@ -14,3 +14,10 @@ export const fetchFeaturedPosts = () => async dispatch => {
   const res = await axios.get(`/api/posts/featured`)
   dispatch({ type: 'FETCH_FEATURED', payload: res.data})
 }
+
+export const submitPost = (values, history) => async dispatch => {
+  const res = await axios.post('/api/posts', values);
+
+  history.push('/posts');
+  dispatch({ type: 'FETCH_POST', payload: res.data });
+};
