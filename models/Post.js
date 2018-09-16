@@ -3,7 +3,7 @@ const { Schema } = mongoose
 
 
 const postSchema = new Schema({
-  user_id: {type: Number, required: true},
+  // user_id: {type: Number, required: true},
   title: {type: String, required: true},
   body: {type: String, required: true},
   repo_name: {type: String}

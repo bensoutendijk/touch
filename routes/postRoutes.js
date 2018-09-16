@@ -26,7 +26,7 @@ module.exports = app => {
     const post = new Post({
       title,
       body,
-      user_id: req.body.user.id,
+      // user_id: req.body.user.id,
       repo_name: req.body.repo_name
     })
 
