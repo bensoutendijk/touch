@@ -1,3 +1,4 @@
+import { isEmpty } from 'lodash'
 import React from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
@@ -10,21 +11,21 @@ import CardMedia from '@material-ui/core/CardMedia';
 import Hidden from '@material-ui/core/Hidden';
 import { withStyles } from '@material-ui/core/styles'
 import styles from '../../styles'
-import { fetchFeaturedPosts } from '../../actions'
 import { fetchPosts } from '../../actions'
+import Divider from '@material-ui/core/Divider';
+import Markdown from './Markdown';
 
 class PostsPage extends React.Component {
   componentDidMount () {
-    this.props.fetchFeaturedPosts()
+    this.props.fetchPosts()
   }
 
   renderFeatured() {
     const { classes } = this.props;
-    if (!this.props.featuredPosts) return ''
-    
-    const mainFeaturedPost = this.props.featuredPosts[Object.keys(this.props.featuredPosts)[0]]
-    const secondFeaturedPost = this.props.featuredPosts[Object.keys(this.props.featuredPosts)[1]]
-    const thirdFeaturedPost = this.props.featuredPosts[Object.keys(this.props.featuredPosts)[2]]
+    if (isEmpty(this.props.posts)) return ''
+    const mainFeaturedPost = this.props.posts[Object.keys(this.props.posts)[0]]
+    const secondFeaturedPost = this.props.posts[Object.keys(this.props.posts)[1]]
+    const thirdFeaturedPost = this.props.posts[Object.keys(this.props.posts)[2]]
 
     const subFeaturedPosts = [secondFeaturedPost, thirdFeaturedPost]
     return (
@@ -84,16 +85,54 @@ class PostsPage extends React.Component {
   }
 
   render() {
+    const { classes } = this.props
+    const posts = Object.keys(this.props.posts).map(key => this.props.posts[key]).slice(3)
     return (
       <div>
         {this.renderFeatured()}
+        <Grid container spacing={40} className={classes.mainGrid}>
+          {/* Main content */}
+          <Grid item xs={12} md={8}>
+            <Typography variant="title" gutterBottom>
+              From the Firehose
+            </Typography>
+            <Divider />
+            {posts.map(post => (
+              <Markdown className={classes.markdown} key={post._id}>
+                {post.title}
+              </Markdown>
+            ))}
+          </Grid>
+          {/* End main content */}
+          {/* Sidebar */}
+          <Grid item xs={12} md={4}>
+            <Paper elevation={0} className={classes.sidebarAboutBox}>
+              <Typography variant="title" gutterBottom>
+                About
+              </Typography>
+              <Typography>
+                Etiam porta sem malesuada magna mollis euismod. Cras mattis consectetur purus sit
+                amet fermentum. Aenean lacinia bibendum nulla sed consectetur.
+              </Typography>
+            </Paper>
+            <Typography variant="title" gutterBottom className={classes.sidebarSection}>
+              Archives
+            </Typography>
+
+            <Typography variant="title" gutterBottom className={classes.sidebarSection}>
+              Social
+            </Typography>
+
+          </Grid>
+          {/* End sidebar */}
+        </Grid>
       </div>
     )
   }
 }
 
 function mapStateToProps({ posts }) {
-  return { featuredPosts: posts.featured };
+  return { posts };
 }
 
-export default withStyles(styles)(connect(mapStateToProps,{ fetchFeaturedPosts, fetchPosts })(PostsPage))
+export default withStyles(styles)(connect(mapStateToProps,{ fetchPosts })(PostsPage))

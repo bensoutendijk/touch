@@ -14,7 +14,7 @@ class NavBar extends React.Component {
             Touch
           </Typography>
           <Typography>
-            <Button component={Link} to='/posts' >Posts</Button>
+            <Button component={Link} to='/posts/new' >Create New Post</Button>
           </Typography>
         </Grid>
       </Toolbar>
