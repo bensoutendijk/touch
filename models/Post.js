@@ -4,7 +4,6 @@ const { Schema } = mongoose
 
 const postSchema = new Schema({
   user_id: {type: Number, required: true},
-  id: {type: Number, unique: true, required: true},
   title: {type: String, required: true},
   body: {type: String, required: true},
   repo_name: {type: String}
