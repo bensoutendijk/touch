@@ -80,6 +80,9 @@ const styles = theme => ({
     marginTop: theme.spacing.unit * 3,
     marginLeft: theme.spacing.unit,
   },
+  postForm: {
+    flexGrow: 1
+  }
 });
 
 export default styles

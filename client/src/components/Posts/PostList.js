@@ -99,7 +99,7 @@ class PostList extends React.Component {
             <Divider />
             {posts.map(post => (
               <Markdown className={classes.markdown} key={post._id}>
-                {post.title}
+                {'# ' + post.title + '\n' + post.body}
               </Markdown>
             ))}
           </Grid>
