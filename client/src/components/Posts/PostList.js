@@ -42,7 +42,7 @@ class PostList extends React.Component {
                   {mainFeaturedPost.body}
                 </Typography>
                 <Typography variant="title" color="inherit" component={Link} to={`/posts/${mainFeaturedPost._id}`}>
-                  Continue reading...
+                  {mainFeaturedPost.repo_name}
                 </Typography>
               </div>
             </Grid>

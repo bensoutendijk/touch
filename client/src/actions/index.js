@@ -21,3 +21,8 @@ export const submitPost = (values, history) => async dispatch => {
   history.push('/posts');
   dispatch({ type: 'FETCH_POST', payload: res.data });
 };
+
+export const fetchGitHub = path => async dispatch => {
+  const res = await axios.get(`https://api.github.com/repos/${path}`)
+  dispatch({ type: 'FETCH_GITHUB', payload: res.data})
+}
