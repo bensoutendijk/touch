@@ -12,6 +12,11 @@ import { withStyles } from '@material-ui/core/styles'
 import styles from '../styles'
 
 class App extends React.Component {
+
+  componentDidMount() {
+    this.props.fetchUser();
+  }
+  
   render() {
     const { classes } = this.props
     return (

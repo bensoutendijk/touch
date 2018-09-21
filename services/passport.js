@@ -1,6 +1,7 @@
 const passport = require('passport');
+const GitHubStrategy = require('passport-github').Strategy
 const mongoose = require('mongoose');
-const LocalStrategy = require('passport-local');
+const keys = require('../config/keys');
 
 const User = mongoose.model('User');
 
@@ -15,14 +16,26 @@ passport.deserializeUser((id, done) => {
 });
 
 passport.use(
-  new LocalStrategy(
-    function(username, password, done) {
-      User.findOne({ username: username }, function (err, user) {
-        if (err) {return done(err);}
-        if (!user) {return done(null, false, {message: 'incorrect username'});}
-        if (!user.verifyPassword(password)) {return done(null, false, {message: 'incorrect password'});}
-        return done(null, user);
-      })
+  new GitHubStrategy(
+    {
+      callbackURL: '/auth/github/callback',
+      clientID: keys.githubClientId,
+      clientSecret: keys.githubClientSecret,
+      proxy: true
+    },
+    async (accessToken, refreshToken, profile, done) => {
+      try {
+        const existingUser = await User.findOne({ githubId: profile.id });
+        if (existingUser) {
+          return done(null, existingUser);
+        }
+        const user = await new User({
+          githubId: profile.id
+        }).save();
+        done(null, user);
+      } catch (err) {
+        done(err, null);
+      }
     }
   )
 );
