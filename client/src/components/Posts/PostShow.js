@@ -5,7 +5,7 @@ import { fetchPost, fetchGitHub } from '../../actions'
 class PostShow extends React.Component {
   componentDidMount() {
     this.props.fetchPost(this.props.match.params.id)
-    this.props.fetchGitHub('bensoutendijk/touch')
+    this.props.fetchGitHub(this.props.post.repo_name)
   }
 
   render() {
