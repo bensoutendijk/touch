@@ -6,6 +6,13 @@ export const fetchUser = () => async dispatch => {
   dispatch({ type: 'FETCH_USER', payload: res.data });
 };
 
+export const fetchUserGithubRepos = (user) => async dispatch => {
+  const githubUser = await axios.get(`https://api.github.com/user/${user.githubId}`)
+  const res = await axios.get(githubUser.data.repos_url)
+
+  dispatch({ type: 'FETCH_USER_GITHUB_REPOS', payload: res.data})
+}
+
 export const fetchPosts = () => async dispatch => {
   const res = await axios.get('/api/posts')
   dispatch({ type: 'FETCH_POSTS', payload: res.data })
