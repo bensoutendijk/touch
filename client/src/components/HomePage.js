@@ -19,7 +19,13 @@ class HomePage extends React.Component {
     }
     return github.map((repo) => {
       return (
-        <div>{repo.name}</div>
+        <div key={repo.id}>
+          <h4>{repo.name}</h4>
+          <ul>
+            <li>Languange: {repo.language}</li>
+            <li>Last updated: {new Date(repo.updated_at).toLocaleDateString()}</li>
+          </ul>
+        </div>
       )
     })
   }
