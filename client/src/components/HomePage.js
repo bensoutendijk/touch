@@ -2,7 +2,16 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { withStyles } from '@material-ui/core/styles'
 import * as actions from '../actions/index'
-import styles from '../styles'
+import colors from '../colors'
+
+const styles = {
+  languageDot:{
+    height: '12px',
+    width: '12px',
+    borderRadius: '50%',
+    display: 'inline-block'
+  }
+}
 
 class HomePage extends React.Component {
   async componentDidMount() {
@@ -11,9 +20,9 @@ class HomePage extends React.Component {
   }
 
   renderRepos() {
-    
+    const { classes } = this.props
     const { github } = this.props
-
+    console.log(colors.JavaScript)
     if(!github.length) {
       return ''
     }
@@ -22,7 +31,7 @@ class HomePage extends React.Component {
         <div key={repo.id}>
           <h4>{repo.name}</h4>
           <ul>
-            <li>Languange: {repo.language}</li>
+            <li>{repo.language} <span style={colors[repo.language]} className={classes.languageDot}></span></li>
             <li>Last updated: {new Date(repo.updated_at).toLocaleDateString()}</li>
           </ul>
         </div>
@@ -31,7 +40,6 @@ class HomePage extends React.Component {
   }
 
   render() {
-    const { classes } = this.props
     return (
       <div>
         {this.renderRepos()}

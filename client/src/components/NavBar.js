@@ -48,9 +48,7 @@ class NavBar extends React.Component {
           <Typography component={Link} to='/' variant="headline">
             Touch
           </Typography>
-          <Typography>
             {this.renderContent()}
-          </Typography>
         </Grid>
       </Toolbar>
     )
