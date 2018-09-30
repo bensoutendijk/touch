@@ -1,10 +1,18 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import { withStyles } from '@material-ui/core/styles'
 import Toolbar from '@material-ui/core/Toolbar'
 import Typography from '@material-ui/core/Typography'
 import Button from '@material-ui/core/Button'
 import Grid from '@material-ui/core/Grid'
 import { Link } from 'react-router-dom'
+
+const styles = {
+  link: {
+    color: 'black',
+    textDecoration: 'none'
+  }
+}
 
 class NavBar extends React.Component {
 
@@ -16,18 +24,19 @@ class NavBar extends React.Component {
   }
 
   renderContent() {
+    const { classes } = this.props
     switch (this.props.auth) {
       case null:
         return;
       case false:
         return (
-            <Button><a href='/auth/github'>Login With GitHub</a></Button>
+            <Button><a className={classes.link} href='/auth/github'>Login With GitHub</a></Button>
         );
       default:
         return (
           <div>
             <Button component={Link} to="/posts">My Blogs</Button>
-            <Button><a href='/auth/logout'>Logout</a></Button>
+            <Button><a className={classes.link} href='/auth/logout'>Logout</a></Button>
           </div>
         )
     }
@@ -52,4 +61,4 @@ function mapStateToProps({ auth }) {
   return { auth };
 }
 
-export default connect(mapStateToProps)(NavBar)
+export default connect(mapStateToProps)(withStyles(styles)((NavBar)))
