@@ -8,25 +8,28 @@ import { Link } from 'react-router-dom'
 
 class NavBar extends React.Component {
 
+  loginHandler = (e) => {
+    this.props.history.push('/')
+  }
+  logoutHandler = (e) => {
+    this.props.history.push('/')
+  }
+
   renderContent() {
     switch (this.props.auth) {
       case null:
         return;
       case false:
         return (
-          <li>
-            <a href={'/auth/github'}>Login With GitHub</a>
-          </li>
+            <Button><a href='/auth/github'>Login With GitHub</a></Button>
         );
       default:
-        return [
-          <li key="3" style={{ margin: '0 10px' }}>
-            <Link to="/posts">My Blogs</Link>
-          </li>,
-          <li key="2">
-            <a href={'/auth/logout'}>Logout</a>
-          </li>
-        ];
+        return (
+          <div>
+            <Button component={Link} to="/posts">My Blogs</Button>
+            <Button><a href='/auth/logout'>Logout</a></Button>
+          </div>
+        )
     }
   }
   render() {
