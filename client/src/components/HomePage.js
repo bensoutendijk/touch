@@ -22,7 +22,6 @@ class HomePage extends React.Component {
   renderRepos() {
     const { classes } = this.props
     const { github } = this.props
-    console.log(colors.JavaScript)
     if(!github.length) {
       return ''
     }

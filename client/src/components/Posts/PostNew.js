@@ -1,32 +1,12 @@
 import React from 'react'
 import { reduxForm } from 'redux-form';
 import PostForm from './PostForm'
-import PostFormReview from './PostFormReview'
 
 class PostNew extends React.Component {
-  state = { showFormReview: false };
-
-  renderContent() {
-    if (this.state.showFormReview) {
-      return (
-        <PostFormReview
-          onCancel={() => this.setState({ showFormReview: false })}
-        />
-      );
-    }
-
-    return (
-      <PostForm
-        onPostSubmit={() => this.setState({ showFormReview: true })}
-      />
-    );
-  }
 
   render() {
     return (
-      <div>
-        {this.renderContent()}
-      </div>
+      <PostForm />
     );
   }
 }

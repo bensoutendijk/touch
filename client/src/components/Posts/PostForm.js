@@ -1,101 +1,67 @@
 import _ from 'lodash'
 import React from 'react'
 import { Link } from 'react-router-dom';
-import { reduxForm, Field, SelectField } from 'redux-form';
+import { reduxForm, Field } from 'redux-form';
 import { connect } from 'react-redux'
 import * as actions from '../../actions/index'
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
-import MenuItem from '@material-ui/core/MenuItem';
-import Menu from '@material-ui/core/Menu';
+import TextField from '@material-ui/core/TextField'
+import Select from '@material-ui/core/Select'
+import MenuItem from '@material-ui/core/MenuItem'
 import { withStyles } from '@material-ui/core/styles'
-import PostField from './PostField'
-import formFields from './formFields';
 import styles from '../../styles'
 import Markdown from './Markdown';
 
-
 class PostForm extends React.Component {
-  state = {
-    anchorEl: null,
-    selectedIndex: 0
-  }
 
   async componentDidMount() {
     await this.props.fetchUser()
     this.props.fetchUserGithubRepos(this.props.user)
   }
 
-  handleClickListItem = event => {
-    this.setState({ anchorEl: event.currentTarget });
+  renderTextField = ({ input, label, meta: { error, touched } }, ...custom) => {
+    return (
+      <Grid item className={input.name}>
+        <TextField
+          name={label}
+          label={label}
+          {...input}
+          {...custom}
+        />
+      </Grid>
+    );
   };
 
-  handleMenuItemClick = (event, index) => {
-    this.setState({ selectedIndex: index, anchorEl: null });
-    console.log(this.state.selectedIndex)
-  };
-
-  handleClose = () => {
-    this.setState({ anchorEl: null });
-  };
-
-  renderFields() {
-    const { anchorEl } = this.state
-    return _.map(formFields, ({ label, name, multiline, placeholder }) => {
-      if(label === 'GitHub Repository') {
-        if(!this.props.github) return ''
-        if(!this.props.github.length) return ''
+  renderSelectField = ({ input, label, meta: { touched, error }, children, ...custom}) => {
+    const { formValues } = this.props
+    if(formValues){
+      const values = formValues.values
+      if(!values) {
         return (
-          <div>
-            <List component="nav">
-              <ListItem
-                button
-                aria-haspopup="true"
-                aria-controls="repo-menu"
-                aria-label={label}
-                onClick={this.handleClickListItem}
-              >
-                  <ListItemText
-                    primary={label}
-                    secondary={this.props.github[this.state.selectedIndex].name}
-                  />
-                </ListItem>
-            </List>
-            <Menu
-              id='repo-menu'
-              anchorEl={anchorEl}
-              open={Boolean(anchorEl)}
-              onClose={this.handleClose}
-            >
-              {_.map(this.props.github, ((repo, index) => (
-                <MenuItem
-                  key={repo.name}
-                  selected={index === this.state.selectedIndex}
-                  onClick={event=> this.handleMenuItemClick(event, index)}
-                >
-                  {repo.name}
-                </MenuItem>
-              )))}
-            </Menu>
-          </div>
+          <Select
+            name={label}
+            label={label}
+            onChange={(event, index, value) => input.onChange(event.target.value)}
+            children={children}
+            {...custom}
+          />
         )
       }
       return (
-        <Field
-          key={name}
-          component={PostField}
-          multiline={multiline}
-          type="text"
+        <Select
+          name={label}
           label={label}
-          name={name}
-          placeholder={placeholder}
+          value={this.props.formValues.values.repo_name}
+          onChange={(event, index, value) => input.onChange(event.target.value)}
+          children={children}
+          {...custom}
         />
-      );
-    });
+      )
+    }
+    return ''
   }
+
   renderPreview() {
     const { formValues } = this.props
     if(formValues){
@@ -123,13 +89,47 @@ class PostForm extends React.Component {
       }
     }
   }
+
+  renderPostFields = () => {
+    const { formValues } = this.props
+    if (!formValues) return ''
+    if (formValues && formValues.values) {
+      return(
+        <div>
+          <Field 
+            name="title"
+            component={this.renderTextField}
+            label="Title"
+          />
+          <Field 
+            name="body"
+            component={this.renderTextField}
+            label="Body"
+          />
+        </div>
+      )
+    }
+  }
+
   render() {
-    const { classes } = this.props;
+    const { classes, handleSubmit } = this.props;
     return (
       <Grid container>
         <Grid item md={6}>
-          <form onSubmit={this.props.handleSubmit(this.props.onPostSubmit)} className={classes.postForm}>
-            {this.renderFields()}
+          <form onSubmit={handleSubmit(this.props.submitPost)} className={classes.postForm}>
+            <Field 
+              name="repo_name"
+              component={this.renderSelectField}
+              label="GitHub Repository"
+            >
+              <MenuItem value={null}>None</MenuItem>
+              {_.map(this.props.github, (repo) => {
+                return (
+                  <MenuItem value={repo.name}>{repo.name}</MenuItem>
+                )
+              })}
+            </Field>
+            {this.renderPostFields()}
             <div className={classes.buttons}>
               <Button to="/posts" component={Link} className={classes.button} color='secondary'>
                 Cancel
@@ -150,13 +150,6 @@ class PostForm extends React.Component {
 
 function validate(values) {
   const errors = {};
-
-  _.each(formFields, ({ name }) => {
-    if (!values[name]) {
-      errors[name] = 'You must provide a value';
-    }
-  });
-
   return errors;
 }
 
