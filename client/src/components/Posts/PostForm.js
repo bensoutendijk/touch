@@ -1,6 +1,6 @@
 import _ from 'lodash'
 import React from 'react'
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import { reduxForm, Field } from 'redux-form';
 import { connect } from 'react-redux'
 import * as actions from '../../actions/index'
@@ -110,12 +110,21 @@ class PostForm extends React.Component {
     }
   }
 
+  onSubmit(event) {
+    event.preventDefault();
+
+    const { submitPost, history, formValues } = this.props;
+
+    submitPost(formValues, history);
+  }
+
   render() {
-    const { classes, handleSubmit } = this.props;
+    console.log(this.props)
+    const { classes } = this.props;
     return (
       <Grid container>
         <Grid item md={6}>
-          <form onSubmit={handleSubmit(this.props.submitPost)} className={classes.postForm}>
+          <form onSubmit={this.onSubmit.bind(this)} className={classes.postForm}>
             <Field 
               name="repo_name"
               component={this.renderSelectField}
@@ -160,8 +169,8 @@ function mapStateToProps(state) {
    }
 }
 
-export default connect(mapStateToProps, actions)(withStyles(styles)(reduxForm({
+export default withRouter(connect(mapStateToProps, actions)(withStyles(styles)(reduxForm({
   validate,
   form: 'postForm',
   destroyOnUnmount: false
-})(PostForm)))
+})(PostForm))))
