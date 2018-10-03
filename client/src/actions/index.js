@@ -30,7 +30,7 @@ export const fetchFeaturedPosts = () => async dispatch => {
 
 export const submitPost = (values, history) => async dispatch => {
   const res = await axios.post('/api/posts', values);
-
+  history.push('/')
   dispatch({ type: 'FETCH_POST', payload: res.data });
 };
 

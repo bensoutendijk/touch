@@ -22,14 +22,12 @@ class PostForm extends React.Component {
 
   renderTextField = ({ input, label, meta: { error, touched } }, ...custom) => {
     return (
-      <Grid item className={input.name}>
         <TextField
           name={label}
           label={label}
           {...input}
           {...custom}
         />
-      </Grid>
     );
   };
 
@@ -42,6 +40,7 @@ class PostForm extends React.Component {
           <Select
             name={label}
             label={label}
+            value={'None'}
             onChange={(event, index, value) => input.onChange(event.target.value)}
             children={children}
             {...custom}
@@ -122,10 +121,10 @@ class PostForm extends React.Component {
               component={this.renderSelectField}
               label="GitHub Repository"
             >
-              <MenuItem value={null}>None</MenuItem>
+              <MenuItem value={'None'}>None</MenuItem>
               {_.map(this.props.github, (repo) => {
                 return (
-                  <MenuItem value={repo.name}>{repo.name}</MenuItem>
+                  <MenuItem key={repo.name} value={repo.name}>{repo.name}</MenuItem>
                 )
               })}
             </Field>
