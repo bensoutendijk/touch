@@ -16,16 +16,15 @@ const styles = {
 class HomePage extends React.Component {
   async componentDidMount() {
     await this.props.fetchUser()
-    this.props.fetchUserGithubRepos(this.props.user)
+    await this.props.fetchGithub(this.props.auth.user)
   }
 
   renderRepos() {
-    const { classes } = this.props
-    const { github } = this.props
-    if(!github.length) {
+    const { classes, github } = this.props
+    if(!github.repos) {
       return ''
     }
-    return github.map((repo) => {
+    return github.repos.map((repo) => {
       return (
         <div key={repo.id}>
           <h4>{repo.name}</h4>
@@ -49,7 +48,7 @@ class HomePage extends React.Component {
 
 function mapStatetoProps ({ github, auth }) {
   return {
-    user: auth,
+    auth: auth,
     github
   }
 }
