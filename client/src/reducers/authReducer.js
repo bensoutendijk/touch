@@ -1,5 +1,4 @@
-
-export default function(state = null, action) {
+export default function(state = {}, action) {
   switch (action.type) {
     case 'FETCH_USER_PENDING':
       return { fetching: true, fetched: false, user: null, error: false }

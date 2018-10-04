@@ -17,9 +17,7 @@ class PostForm extends React.Component {
 
   async componentDidMount() {
     await this.props.fetchUser()
-    if(!this.props.fetching && this.props.auth && this.props.auth.user) {
-      this.props.fetchGithub(this.props.auth.user)
-    }
+    await this.props.fetchGithub(this.props.auth.user)
   }
 
   renderTextField = ({ input, label, meta: { error, touched } }, ...custom) => {
@@ -121,8 +119,10 @@ class PostForm extends React.Component {
   }
 
   render() {
-    const { classes, github } = this.props;
-    if (!github) return ''
+    const { classes, github, auth } = this.props;
+    if (auth.error) return ''
+    if (github.error) return ''
+    if (!github.repos) return ''
     return (
       <Grid container>
         <Grid item md={6}>
