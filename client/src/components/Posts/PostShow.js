@@ -1,11 +1,11 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { fetchPost, fetchGitHub } from '../../actions'
+import * as actions from '../../actions'
 
 class PostShow extends React.Component {
   componentDidMount() {
     this.props.fetchPost(this.props.match.params.id)
-    this.props.fetchGitHub(this.props.post.repo_name)
+    this.props.fetchGithubByName(this.props.post.repo_name)
   }
 
   render() {
@@ -35,4 +35,4 @@ function mapStateToProps({ posts, github }, ownProps) {
   };
 }
 
-export default connect(mapStateToProps, { fetchPost, fetchGitHub })(PostShow)
+export default connect(mapStateToProps, actions)(PostShow)

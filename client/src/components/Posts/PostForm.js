@@ -115,7 +115,7 @@ class PostForm extends React.Component {
 
     const { submitPost, history, formValues } = this.props;
 
-    submitPost(formValues, history);
+    submitPost(formValues.values, history);
   }
 
   render() {

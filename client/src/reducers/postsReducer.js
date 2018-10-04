@@ -1,9 +1,11 @@
-import mapKeys from 'lodash/mapKeys';
-
 export default function(state = {}, action) {
   switch (action.type) {
-    case 'FETCH_POSTS':
-      return { ...state, ...mapKeys(action.payload, '_id') }
+    case 'FETCH_POSTS_PENDING':
+      return { fetching: true, fetched: false, user: null, error: false }
+    case 'FETCH_POSTS_FULFILLED':
+      return { fetching: false, fetched: true, payload: action.payload, error: false };
+    case 'FETCH_POSTS_REJECTED':
+      return { fetching: false, fetched: false, user: null, error: true}
     default:
       return state;
   }

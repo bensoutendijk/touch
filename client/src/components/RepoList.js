@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { withStyles } from '@material-ui/core/styles'
-import * as actions from '../actions/index'
+import * as actions from '../actions'
 import colors from '../colors'
 
 const styles = {
@@ -13,7 +13,7 @@ const styles = {
   }
 }
 
-class HomePage extends React.Component {
+class RepoList extends React.Component {
   async componentDidMount() {
     await this.props.fetchUser()
     await this.props.fetchGithub(this.props.auth.user)
@@ -48,9 +48,9 @@ class HomePage extends React.Component {
 
 function mapStatetoProps ({ github, auth }) {
   return {
-    auth: auth,
+    auth,
     github
   }
 }
 
-export default withStyles(styles)(connect(mapStatetoProps, actions)(HomePage))
+export default withStyles(styles)(connect(mapStatetoProps, actions)(RepoList))
