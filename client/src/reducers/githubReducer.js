@@ -1,8 +1,11 @@
-export default function(state = {}, action) {
+export default function(state = null, action) {
   switch (action.type) {
-    case 'FETCH_USER_GITHUB_REPOS':
-      const github = action.payload
-      return github || false
+    case 'FETCH_GITHUB_PENDING':
+      return { fetching: true, fetched: false, repos: null, error: false }
+    case 'FETCH_GITHUB_FULFILLED':
+      return { fetching: false, fetched: true, repos: action.payload, error: false }
+    case 'FETCH_GITHUB_REJECTED':
+      return { fetching: false, fetched: false, repos: null, error: true }
     default:
       return state;
   }

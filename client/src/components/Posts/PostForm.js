@@ -17,7 +17,9 @@ class PostForm extends React.Component {
 
   async componentDidMount() {
     await this.props.fetchUser()
-    this.props.fetchUserGithubRepos(this.props.user)
+    if(!this.props.fetching && this.props.auth && this.props.auth.user) {
+      this.props.fetchGithub(this.props.auth.user)
+    }
   }
 
   renderTextField = ({ input, label, meta: { error, touched } }, ...custom) => {
@@ -119,8 +121,8 @@ class PostForm extends React.Component {
   }
 
   render() {
-    console.log(this.props)
-    const { classes } = this.props;
+    const { classes, github } = this.props;
+    if (!github) return ''
     return (
       <Grid container>
         <Grid item md={6}>
@@ -131,7 +133,7 @@ class PostForm extends React.Component {
               label="GitHub Repository"
             >
               <MenuItem value={'None'}>None</MenuItem>
-              {_.map(this.props.github, (repo) => {
+              {_.map(github.repos, (repo) => {
                 return (
                   <MenuItem key={repo.name} value={repo.name}>{repo.name}</MenuItem>
                 )
@@ -163,7 +165,7 @@ function validate(values) {
 
 function mapStateToProps(state) {
   return {
-    user: state.auth,
+    auth: state.auth,
     formValues: state.form.postForm,
     github: state.github
    }
