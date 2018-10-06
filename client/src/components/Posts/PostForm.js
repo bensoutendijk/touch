@@ -10,8 +10,27 @@ import TextField from '@material-ui/core/TextField'
 import Select from '@material-ui/core/Select'
 import MenuItem from '@material-ui/core/MenuItem'
 import { withStyles } from '@material-ui/core/styles'
-import styles from '../../styles'
 import Markdown from './Markdown';
+
+const styles = theme => ({
+  form:{
+    display: 'flex',
+    flexDirection: 'column'
+  },
+  buttonContainer:{
+    display: 'flex',
+    justifyContent: 'flex-end',
+  },
+  button:{
+    marginTop: theme.spacing.unit * 3,
+    marginLeft: theme.spacing.unit,
+  },
+  md: {
+    fontSize: 16,
+    paddingTop: theme.spacing.unit * 5
+  }
+  
+})
 
 class PostForm extends React.Component {
 
@@ -62,51 +81,30 @@ class PostForm extends React.Component {
   }
 
   renderPreview() {
-    const { formValues } = this.props
+    const { classes, formValues } = this.props
     if(formValues){
       const values = formValues.values
       if (values && values['body'] && values['title']) {
         return (
-          <Markdown>
-            {'# ' + values['title'] + '\n' + values['body']}
+          <Markdown className={classes.md}>
+            {'# ' + values['title'] + '\n\n\n' + values['body']}
           </Markdown>
         )
       }
       if (values && values['title']) {
         return (
-          <Markdown>
+          <Markdown className={classes.md}>
             {'# ' + values['title']}
           </Markdown>
         )
       }
       if (values && values['body']) {
         return (
-          <Markdown>
+          <Markdown className={classes.md}>
             {'\n' + values['body']}
           </Markdown>
         )
       }
-    }
-  }
-
-  renderPostFields = () => {
-    const { formValues } = this.props
-    if (!formValues) return ''
-    if (formValues && formValues.values) {
-      return(
-        <div>
-          <Field 
-            name="title"
-            component={this.renderTextField}
-            label="Title"
-          />
-          <Field 
-            name="body"
-            component={this.renderTextField}
-            label="Body"
-          />
-        </div>
-      )
     }
   }
 
@@ -124,9 +122,9 @@ class PostForm extends React.Component {
     if (github.error) return ''
     if (!github.repos) return ''
     return (
-      <Grid container>
-        <Grid item md={6}>
-          <form onSubmit={this.onSubmit.bind(this)} className={classes.postForm}>
+      <Grid container spacing={16}>
+        <Grid item sm={12} md={6} lg={6}>
+          <form onSubmit={this.onSubmit.bind(this)} className={classes.form}>
             <Field 
               name="repo_name"
               component={this.renderSelectField}
@@ -139,8 +137,17 @@ class PostForm extends React.Component {
                 )
               })}
             </Field>
-            {this.renderPostFields()}
-            <div className={classes.buttons}>
+            <Field 
+              name="title"
+              component={this.renderTextField}
+              label="Title"
+            />
+            <Field 
+              name="body"
+              component={this.renderTextField}
+              label="Body"
+            />
+            <div className={classes.buttonContainer}>
               <Button to="/posts" component={Link} className={classes.button} color='secondary'>
                 Cancel
               </Button>
@@ -150,7 +157,7 @@ class PostForm extends React.Component {
             </div>
           </form>
         </Grid>
-        <Grid item md={6}>
+        <Grid item sm={12} md={6} lg={6}>
           {this.renderPreview()}
         </Grid>
       </Grid>
