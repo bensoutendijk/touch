@@ -39,7 +39,8 @@ class PostForm extends React.Component {
     await this.props.fetchGithub(this.props.auth.user)
   }
 
-  renderTextField = ({ input, label, meta: { error, touched } }, ...custom) => {
+  renderTextField = ({ input, label, meta: { error, touched }, ...custom }) => {
+    console.log(custom)
     return (
         <TextField
           name={label}
@@ -146,6 +147,8 @@ class PostForm extends React.Component {
               name="body"
               component={this.renderTextField}
               label="Body"
+              multiline={true}
+              rows={80}
             />
             <div className={classes.buttonContainer}>
               <Button to="/posts" component={Link} className={classes.button} color='secondary'>
