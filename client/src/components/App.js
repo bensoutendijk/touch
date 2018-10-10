@@ -14,7 +14,7 @@ import RepoList from './RepoList';
 class App extends React.Component {
 
   componentDidMount() {
-    this.props.fetchUser();
+    this.props.fetchUserAndGithubRepos()
   }
   
   render() {
@@ -42,4 +42,10 @@ class App extends React.Component {
   }
 }
 
-export default withStyles(styles)(connect(null, actions)(App))
+function mapStateToProps(state) {
+  return {
+    auth: state.auth,
+   }
+}
+
+export default withStyles(styles)(connect(mapStateToProps, actions)(App))

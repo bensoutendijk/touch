@@ -14,27 +14,23 @@ const styles = {
 }
 
 class RepoList extends React.Component {
-  async componentDidMount() {
-    await this.props.fetchUser()
-    await this.props.fetchGithub(this.props.auth.user)
-  }
 
   renderRepos() {
     const { classes, github } = this.props
-    if(!github.repos) {
-      return ''
+    if(github.fetched) {
+      return github.repos.map((repo) => {
+        return (
+          <div key={repo.id}>
+            <h4>{repo.name}</h4>
+            <ul>
+              <li>{repo.language} <span style={colors[repo.language]} className={classes.languageDot}></span></li>
+              <li>Last updated: {new Date(repo.updated_at).toLocaleDateString()}</li>
+            </ul>
+          </div>
+        )
+      })
     }
-    return github.repos.map((repo) => {
-      return (
-        <div key={repo.id}>
-          <h4>{repo.name}</h4>
-          <ul>
-            <li>{repo.language} <span style={colors[repo.language]} className={classes.languageDot}></span></li>
-            <li>Last updated: {new Date(repo.updated_at).toLocaleDateString()}</li>
-          </ul>
-        </div>
-      )
-    })
+    return ''
   }
 
   render() {

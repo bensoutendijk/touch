@@ -10,12 +10,15 @@ import TextField from '@material-ui/core/TextField'
 import Select from '@material-ui/core/Select'
 import MenuItem from '@material-ui/core/MenuItem'
 import { withStyles } from '@material-ui/core/styles'
-import Markdown from './Markdown';
 
 const styles = theme => ({
+  root:{
+    paddingTop: theme.spacing.unit * 10,
+    justifyContent: 'space-around'
+  },
   form:{
     display: 'flex',
-    flexDirection: 'column'
+    flexDirection: 'column',
   },
   buttonContainer:{
     display: 'flex',
@@ -34,13 +37,7 @@ const styles = theme => ({
 
 class PostForm extends React.Component {
 
-  async componentDidMount() {
-    await this.props.fetchUser()
-    await this.props.fetchGithub(this.props.auth.user)
-  }
-
   renderTextField = ({ input, label, meta: { error, touched }, ...custom }) => {
-    console.log(custom)
     return (
         <TextField
           name={label}
@@ -53,60 +50,19 @@ class PostForm extends React.Component {
 
   renderSelectField = ({ input, label, meta: { touched, error }, children, ...custom}) => {
     const { formValues } = this.props
-    if(formValues){
-      const values = formValues.values
-      if(!values) {
-        return (
-          <Select
-            name={label}
-            label={label}
-            value={'None'}
-            onChange={(event, index, value) => input.onChange(event.target.value)}
-            children={children}
-            {...custom}
-          />
-        )
-      }
+    if (formValues && formValues.values && formValues.values.repo_name) {
       return (
         <Select
-          name={label}
-          label={label}
-          value={this.props.formValues.values.repo_name}
-          onChange={(event, index, value) => input.onChange(event.target.value)}
-          children={children}
-          {...custom}
+        name={label}
+        label={label}
+        value={formValues.values.repo_name}
+        onChange={(event, index, value) => input.onChange(event.target.value)}
+        children={children}
+        {...custom}
         />
       )
     }
     return ''
-  }
-
-  renderPreview() {
-    const { classes, formValues } = this.props
-    if(formValues){
-      const values = formValues.values
-      if (values && values['body'] && values['title']) {
-        return (
-          <Markdown className={classes.md}>
-            {'# ' + values['title'] + '\n\n\n' + values['body']}
-          </Markdown>
-        )
-      }
-      if (values && values['title']) {
-        return (
-          <Markdown className={classes.md}>
-            {'# ' + values['title']}
-          </Markdown>
-        )
-      }
-      if (values && values['body']) {
-        return (
-          <Markdown className={classes.md}>
-            {'\n' + values['body']}
-          </Markdown>
-        )
-      }
-    }
   }
 
   onSubmit(event) {
@@ -118,20 +74,17 @@ class PostForm extends React.Component {
   }
 
   render() {
-    const { classes, github, auth } = this.props;
-    if (auth.error) return ''
-    if (github.error) return ''
-    if (!github.repos) return ''
+    const { classes, github } = this.props;
     return (
-      <Grid container spacing={16}>
-        <Grid item sm={12} md={6} lg={6}>
+      <Grid container className={classes.root}>
+        <Grid item md={8}>
           <form onSubmit={this.onSubmit.bind(this)} className={classes.form}>
             <Field 
               name="repo_name"
               component={this.renderSelectField}
               label="GitHub Repository"
             >
-              <MenuItem value={'None'}>None</MenuItem>
+              <MenuItem value={'None'}><em>None</em></MenuItem>
               {_.map(github.repos, (repo) => {
                 return (
                   <MenuItem key={repo.name} value={repo.name}>{repo.name}</MenuItem>
@@ -160,9 +113,6 @@ class PostForm extends React.Component {
             </div>
           </form>
         </Grid>
-        <Grid item sm={12} md={6} lg={6}>
-          {this.renderPreview()}
-        </Grid>
       </Grid>
     )
   }
@@ -182,6 +132,7 @@ function mapStateToProps(state) {
 }
 
 export default withRouter(connect(mapStateToProps, actions)(withStyles(styles)(reduxForm({
+  initialValues: {repo_name: 'None'},
   validate,
   form: 'postForm',
   destroyOnUnmount: false

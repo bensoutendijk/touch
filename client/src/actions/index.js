@@ -10,14 +10,22 @@ export const fetchUser = () => async dispatch => {
   } 
 }
 
-export const fetchGithub = (user) => async dispatch => {
-  dispatch({ type: 'FETCH_GITHUB_PENDING' })
+export const fetchUserAndGithubRepos = () => async dispatch => {
+  dispatch({ type: 'FETCH_USER_PENDING' })
   try {
-    const githubUser = await axios.get(`https://api.github.com/user/${user.githubId}`)
-    const res = await axios.get(githubUser.data.repos_url)
-    dispatch({ type: 'FETCH_GITHUB_FULFILLED', payload: res.data})
+    const userRes = await axios.get('/api/current_user');
+    dispatch({ type: 'FETCH_USER_FULFILLED', payload: userRes.data });
+    const user = userRes.data
+    dispatch({ type: 'FETCH_GITHUB_PENDING' })
+    try {
+      const githubUser = await axios.get(`https://api.github.com/user/${user.githubId}`)
+      const githubRes = await axios.get(githubUser.data.repos_url)
+      dispatch({ type: 'FETCH_GITHUB_FULFILLED', payload: githubRes.data})
+    } catch (err) {
+      dispatch({ type: 'FETCH_GITHUB_REJECTED' })
+    }
   } catch (err) {
-    dispatch({ type: 'FETCH_GITHUB_REJECTED' })
+    dispatch({ type: 'FETCH_USER_REJECTED' })
   }
 }
 
