@@ -101,14 +101,14 @@ class PostForm extends React.Component {
               component={this.renderTextField}
               label="Body"
               multiline={true}
-              rows={80}
+              rows={50}
             />
             <div className={classes.buttonContainer}>
               <Button to="/posts" component={Link} className={classes.button} color='secondary'>
                 Cancel
               </Button>
               <Button type='submit' className={classes.button} color='primary'>
-                Next
+                Save
               </Button>
             </div>
           </form>

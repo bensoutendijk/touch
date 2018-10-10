@@ -36,7 +36,6 @@ class NavBar extends React.Component {
         return (
           <div>
             <Button component={Link} to="/posts/new">Write</Button>
-            <Button component={Link} to="/posts">My Blogs</Button>
             <Button><a className={classes.link} href='/auth/logout'>Logout</a></Button>
           </div>
         )
