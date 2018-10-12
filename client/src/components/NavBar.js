@@ -25,10 +25,10 @@ class NavBar extends React.Component {
 
   renderContent() {
     const { classes } = this.props
-    switch (this.props.auth) {
+    switch (this.props.auth.user) {
       case null:
         return;
-      case false:
+      case "":
         return (
             <Button><a className={classes.link} href='/auth/github'>Login With GitHub</a></Button>
         );
