@@ -19,7 +19,6 @@ const styles = {
     display: 'inline-block'
   },
   card: {
-    maxWidth: 345
   }
 }
 
@@ -59,7 +58,7 @@ class RepoList extends React.Component {
 
   render() {
     return (
-      <Grid container spacing={24}>
+      <Grid container spacing={8} md={4}>
         {this.renderRepos()}
       </Grid>
     )
